@@ -62,7 +62,7 @@ func init() {
 		}
 	}
 
-	if len(os.Args) < 2 {
+	if len(os.Args) < 1 {
 		fmt.Println("Provide a username, e.g. @dril")
 		os.Exit(1)
 	}
@@ -79,6 +79,7 @@ func init() {
 }
 
 func main() {
+	// create config
 	config := &oauth1a.ClientConfig{
 		ConsumerKey:    "CONSUMER_KEY",
 		ConsumerSecret: "CONSUMER_SECRET",
@@ -93,9 +94,33 @@ func main() {
 	// don't save app token
 	_ = client.GetAppToken()
 
-	// request
+	// make request
 	value := url.Values{}
 	value.Set("user_id", twitterUser)
-	req, err := http.NewRequest("GET", "/1.1/statuses/user_timeline.json"+value.Encode(), nil)
+	request, err := http.NewRequest("GET", "/1.1/statuses/user_timeline.json"+value.Encode(), nil)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Couldn't parse request: %v\n", err)
+		os.Exit(2)
+	}
+
+	response, err := client.SendRequest(request)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Couldn't send request: %v\n", err)
+		os.Exit(2)
+	}
+
+	// get response
+	searchResults := &twittergo.SearchResults{}
+	if err := response.Parse(searchResults); err != nil {
+		fmt.Fprintf(os.Stderr, "Couldn't parse response: %v\n", err)
+		os.Exit(2)
+	}
+
+	// print tweets
+	tweets := searchResults.Statuses()
+
+	for _, value := range tweets {
+		fmt.Println(value.Text())
+	}
 
 }
