@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/kurrik/twittergo"
-
 	"github.com/kurrik/oauth1a"
 )
 
