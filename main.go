@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/kurrik/twittergo"
@@ -84,6 +86,16 @@ func main() {
 
 	client := twittergo.NewClient(config, nil)
 	if err := client.FetchAppToken(); err != nil {
-		// handle err
+		fmt.Fprintf(os.Stderr, "Couldn't fetch app token: %v\n", err)
+		os.Exit(2)
 	}
+
+	// don't save app token
+	_ = client.GetAppToken()
+
+	// request
+	value := url.Values{}
+	value.Set("user_id", twitterUser)
+	req, err := http.NewRequest("GET", "/1.1/statuses/user_timeline.json"+value.Encode(), nil)
+
 }
