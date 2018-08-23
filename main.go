@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"net/http"
@@ -26,6 +27,7 @@ Version: %s
 
 var (
 	version               bool
+	tweet                 []byte
 	twitterUser           string
 	twitterConsumerKey    string
 	twitterConsumerSecret string
@@ -67,13 +69,6 @@ func init() {
 		os.Exit(1)
 	}
 
-	/*
-		if len(os.Args) < 2 {
-			fmt.Println("Provide a username, e.g. @dril")
-			os.Exit(1)
-		}
-	*/
-
 	argument := flag.Args()[0]
 
 	if argument == "help" {
@@ -97,7 +92,7 @@ func init() {
 }
 
 func main() {
-	numberOfTweets := "2"
+	numberOfTweets := "1"
 	// create config
 	config := &oauth1a.ClientConfig{
 		ConsumerKey:    twitterConsumerKey,
@@ -115,10 +110,9 @@ func main() {
 
 	// make request
 	value := url.Values{}
+	value.Set("count", numberOfTweets)
 	value.Set("screen_name", twitterUser)
-	count := url.Values{}
-	count.Set("&count", numberOfTweets)
-	request, err := http.NewRequest("GET", "/1.1/statuses/user_timeline.json?"+value.Encode()+count.Encode(), nil)
+	request, err := http.NewRequest("GET", "/1.1/statuses/user_timeline.json?"+value.Encode(), nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Couldn't parse request: %v\n", err)
 		os.Exit(2)
@@ -130,24 +124,19 @@ func main() {
 		os.Exit(2)
 	}
 
-	if response.HasRateLimit() {
-		fmt.Printf("Rate limit:           %v\n", response.RateLimit())
-		fmt.Printf("Rate limit remaining: %v\n", response.RateLimitRemaining())
-		fmt.Printf("Rate limit reset:     %v\n", response.RateLimitReset())
-	}
-
 	// get response
-	searchResults := &twittergo.SearchResults{}
-	if err := response.Parse(searchResults); err != nil {
+	results := &twittergo.Timeline{}
+	if err := response.Parse(results); err != nil {
 		fmt.Fprintf(os.Stderr, "Couldn't parse response: %v\n", err)
 		os.Exit(2)
 	}
 
 	// print tweets
-	tweets := searchResults.Statuses()
-
-	for _, value := range tweets {
+	for _, value := range *results {
+		if tweet, err = json.Marshal(*results); err != nil {
+			fmt.Fprintf(os.Stderr, "Couldn't encode tweet: %v\n", err)
+			os.Exit(1)
+		}
 		fmt.Println(value.Text())
 	}
-
 }
