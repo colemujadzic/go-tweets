@@ -13,7 +13,6 @@ import (
 )
 
 const (
-	// banner to be displayed
 	BANNER = `
 Go-Tweets
 
