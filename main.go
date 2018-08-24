@@ -36,7 +36,7 @@ func init() {
 	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "twitter consumer secret")
 
 	flag.BoolVar(&version, "version", false, "print version and exit")
-	flag.BoolVar(&version, "v", false, "print version and exit (s)")
+	flag.BoolVar(&version, "v", false, "print version and exit")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, VERSION))
