@@ -13,13 +13,14 @@ import (
 )
 
 const (
+	// BANNER ...
 	BANNER = `
 Go-Tweets
 
 Get tweets for a user
 Version: %s
-
-	// version
+`
+	// VERSION ...
 	VERSION = "0.0.1"
 )
 
@@ -27,19 +28,24 @@ var (
 	version               bool
 	tweet                 []byte
 	twitterUser           string
+	numberOfTweets        string
 	twitterConsumerKey    string
 	twitterConsumerSecret string
 )
 
 func init() {
-	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "twitter consumer key")
-	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "twitter consumer secret")
+	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "Twitter consumer key")
+	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "Twitter consumer secret")
 
-	flag.BoolVar(&version, "version", false, "print version and exit")
-	flag.BoolVar(&version, "v", false, "print version and exit")
+	flag.BoolVar(&version, "version", false, "Print version and exit")
+	flag.BoolVar(&version, "v", false, "Print version and exit")
 
+	// flag.Usage prints usage information when -h or -help flag is invoked
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, VERSION))
+		fmt.Println()
+		fmt.Println("Usage:  go-tweets  [options]  <twitter username>  <number of tweets>")
+		fmt.Println()
 		flag.PrintDefaults()
 	}
 
@@ -47,7 +53,6 @@ func init() {
 
 	if twitterConsumerKey == "" {
 		if twitterConsumerKey = os.Getenv("CONSUMER_KEY"); twitterConsumerKey == "" {
-			fmt.Println("TEST: COULDN'T GET CONSUMER KEY")
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
@@ -55,33 +60,48 @@ func init() {
 
 	if twitterConsumerSecret == "" {
 		if twitterConsumerSecret = os.Getenv("CONSUMER_SECRET"); twitterConsumerSecret == "" {
-			fmt.Println("TEST: COULDN'T GET CONSUMER SECRET")
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
 	}
 
+	/*
+		// reserve for commands / subcommands
+		// verify that a subommand has been provided
+		// os.Args[0] is the main command
+		// os.Args[2] is the subcommand
+		if len(os.Args) == 0 {
+			fmt.Println("A command or subcommand is required")
+			flag.PrintDefaults()
+			os.Exit(1)
+		}
+	*/
+
+	// check for arguments
 	if flag.NArg() == 0 {
-		fmt.Println("TEST: NO USER ENTERED")
+		fmt.Println("Please provide a username.")
+		flag.PrintDefaults()
+		os.Exit(1)
+	} else if flag.NArg() == 1 {
+		fmt.Println("Please provide the number of tweets you wish to retrieve.")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
-	argument := flag.Args()[0]
+	// argument := flag.Args()[0]
+	firstArgument := flag.Args()[0]
+	secondArgument := flag.Args()[1]
 
-	if argument == "help" {
-		fmt.Println("TEST: HELP ARGUMENT")
-		flag.PrintDefaults()
-		os.Exit(1)
+	// note:
+
+	if firstArgument == "version" || firstArgument == "v" {
+		fmt.Println("VERSION - TEST")
+		fmt.Printf("%s", VERSION)
+		os.Exit(0)
 	}
 
-	if argument == "version" {
-		fmt.Println("TEST: VERSION ARGUMENT")
-		flag.PrintDefaults()
-		os.Exit(1)
-	}
-
-	twitterUser = argument
+	twitterUser = firstArgument
+	numberOfTweets = secondArgument
 
 	if version {
 		fmt.Printf("%s", VERSION)
@@ -90,7 +110,6 @@ func init() {
 }
 
 func main() {
-	numberOfTweets := "1"
 	// create config
 	config := &oauth1a.ClientConfig{
 		ConsumerKey:    twitterConsumerKey,
