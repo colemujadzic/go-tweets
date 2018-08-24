@@ -15,9 +15,8 @@ import (
 const (
 	// BANNER ...
 	BANNER = `
-Go-Tweets
+go-tweets - Command line tool to retrieve a twitter user's tweets using the twittergo library and Twitter's API
 
-Get tweets for a user
 Version: %s
 `
 	// VERSION ...
