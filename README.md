@@ -14,9 +14,8 @@ $ go get github.com/colemujadzic/go-tweets
 ```console
 $ go-tweets -h
 
-Go-Tweets
+go-tweets - Command line tool to retrieve a twitter user's tweets using the twittergo library and Twitter's API
 
-Get tweets for a user
 Version: 0.0.1
 
 Usage:  go-tweets  [options]  <twitter username>  <number of tweets>
