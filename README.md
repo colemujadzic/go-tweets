@@ -19,6 +19,8 @@ Go-Tweets
 Get tweets for a user
 Version: 0.0.1
 
+Usage:  go-tweets  [options]  <twitter username>  <number of tweets>
+
   -consumer-key string
         twitter consumer key
   -consumer-secret string
@@ -27,4 +29,3 @@ Version: 0.0.1
   -version
         print version and exit
 ```
-
