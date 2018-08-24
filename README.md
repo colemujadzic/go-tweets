@@ -3,7 +3,7 @@ View a twitter account's most recent tweets with this command-line tool, written
 
 ## Installation
 
-#### Via "go get"
+#### Via Go
 
 ```console
 $ go get github.com/colemujadzic/go-tweets
