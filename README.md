@@ -18,7 +18,7 @@ go-tweets - Command line tool to retrieve a twitter user's tweets using Twitter'
 
 Version: 0.0.1
 
-Usage:  go-tweets  [options]  <twitter username>  <number of tweets>
+Usage:  go-tweets [options] <twitter username> <number of tweets>
 
   -consumer-key string
         twitter consumer key
