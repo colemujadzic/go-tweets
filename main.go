@@ -19,7 +19,6 @@ Go-Tweets
 Get tweets for a user
 Version: %s
 
-`
 	// version
 	VERSION = "0.0.1"
 )
