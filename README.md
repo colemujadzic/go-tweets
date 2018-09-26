@@ -1,4 +1,7 @@
 # go-tweets
+
+[![Travis CI](https://img.shields.io/travis/colemujadzic/go-tweets.svg?style=for-the-badge)](https://travis-ci.org/colemujadzic/go-tweets)
+
 View a twitter account's most recent tweets with this command-line tool, written in Go
 
 ## Installation
