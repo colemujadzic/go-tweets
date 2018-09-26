@@ -1,0 +1,16 @@
+language: go
+sudo: false
+go:
+  - 1.11
+before_install:
+  - go get github.com/kurrik/oauth1a
+  - go get github.com/kurrik/twittergo
+script:
+  - make
+deploy:
+  provider: releases
+  api_key: 
+    secure:
+  skip_cleanup: true
+  on:
+    tags: true
