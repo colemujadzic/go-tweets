@@ -34,8 +34,8 @@ var (
 
 // need to write tests
 func init() {
-	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "Twitter consumer key")
-	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "Twitter consumer secret")
+	flag.StringVar(&twitterConsumerKey, "consumer-key", os.Getenv("TWITTER_CONSUMER_KEY"), "Twitter consumer key")
+	flag.StringVar(&twitterConsumerSecret, "consumer-secret", os.Getenv("TWITTER_CONSUMER_SECRET"), "Twitter consumer secret")
 
 	flag.BoolVar(&version, "version", false, "Print version and exit")
 	flag.BoolVar(&version, "v", false, "Print version and exit")
@@ -51,21 +51,19 @@ func init() {
 
 	flag.Parse()
 
-	/*
-		if twitterConsumerKey == "" {
-			if twitterConsumerKey = os.Getenv("CONSUMER_KEY"); twitterConsumerKey == "" {
-				flag.PrintDefaults()
-				os.Exit(1)
-			}
+	if twitterConsumerKey == "" {
+		if twitterConsumerKey = os.Getenv("CONSUMER_KEY"); twitterConsumerKey == "" {
+			flag.PrintDefaults()
+			os.Exit(1)
 		}
+	}
 
-		if twitterConsumerSecret == "" {
-			if twitterConsumerSecret = os.Getenv("CONSUMER_SECRET"); twitterConsumerSecret == "" {
-				flag.PrintDefaults()
-				os.Exit(1)
-			}
+	if twitterConsumerSecret == "" {
+		if twitterConsumerSecret = os.Getenv("CONSUMER_SECRET"); twitterConsumerSecret == "" {
+			flag.PrintDefaults()
+			os.Exit(1)
 		}
-	*/
+	}
 
 	/*
 		// reserve for commands / subcommands
