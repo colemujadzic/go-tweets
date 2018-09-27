@@ -28,3 +28,8 @@ Usage:  go-tweets [options] <twitter username> <number of tweets>
   -version
         print version and exit
 ```
+
+## Acknowledgments
+
+* Most of the inspiration to try this came from [Jessie Frazelle's](https://github.com/jessfraz/) command-line tools.
+* [Filippo Valsorda's](https://github.com/FiloSottile) amazing [Makefile](https://github.com/cloudflare/hellogopher) for Go was also super helpful.
