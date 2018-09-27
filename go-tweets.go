@@ -52,14 +52,14 @@ func init() {
 	flag.Parse()
 
 	if twitterConsumerKey == "" {
-		if twitterConsumerKey = os.Getenv("CONSUMER_KEY"); twitterConsumerKey == "" {
+		if twitterConsumerKey = os.Getenv("TWITTER_CONSUMER_KEY"); twitterConsumerKey == "" {
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
 	}
 
 	if twitterConsumerSecret == "" {
-		if twitterConsumerSecret = os.Getenv("CONSUMER_SECRET"); twitterConsumerSecret == "" {
+		if twitterConsumerSecret = os.Getenv("TWITTER_CONSUMER_SECRET"); twitterConsumerSecret == "" {
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
