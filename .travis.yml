@@ -9,8 +9,6 @@ script:
   - make
 deploy:
   provider: releases
-  api_key: 
-    secure:
   skip_cleanup: true
   on:
     tags: true
