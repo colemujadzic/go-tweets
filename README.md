@@ -26,9 +26,6 @@ Usage:  go-tweets [options] <twitter username> <number of tweets>
         twitter consumer key
   -consumer-secret string
         twitter consumer secret
-  -v    print version and exit (s)
-  -version
-        print version and exit
 ```
 
 ## Acknowledgments
